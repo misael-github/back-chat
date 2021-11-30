@@ -13,19 +13,29 @@ const app = express();
 app.use(json());
 app.use(cors())
 
-app.post("/chatroom", (req: any, res: any) => {
-  const id = uuidv4()      // Genero un id
-  const chatRoomRef = rtdb.ref("/chatrooms/" + id)
-  chatRoomRef.set(
-    {
-    type:"chatroom",
-  },
-   function(){
-    res.json({  // devuelve un objeto con la propiedad id que tiene el id
-      id
+app.post("/messages", (req: any, res: any) => {
+    const chatRoomRef = rtdb.ref("/chatrooms/general/messages")
+    chatRoomRef.push(req.body, function(){
+      
+      res.json("todo ok")
     })
+  
 
-  })
+
+    
+
+  // const id = uuidv4()      // Genero un id
+  // const chatRoomRef = rtdb.ref("/chatrooms/" + id)
+  // chatRoomRef.set(
+  //   {
+  //   type:"chatroom",
+  // },
+  //  function(){
+  //   res.json({  // devuelve un objeto con la propiedad id que tiene el id
+  //     id
+  //   })
+
+  // })
 });
 
 app.post("messages", (req, res) => {
